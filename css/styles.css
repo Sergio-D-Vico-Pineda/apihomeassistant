@@ -1,0 +1,487 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.ha-body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+}
+
+.ha-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.ha-error {
+    color: red;
+    margin: 10px 0;
+}
+
+.ha-success {
+    color: green;
+}
+
+.ha-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.ha-table th,
+.ha-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.ha-table th {
+    background-color: #f4f4f4;
+}
+
+.ha-form {
+    margin: 20px 0;
+}
+
+.ha-input {
+    width: 300px;
+    padding: 5px;
+}
+
+.ha-button {
+    padding: 5px 10px;
+    background-color: #007cba;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.ha-button:hover {
+    background-color: #005a87;
+}
+
+.ha-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.ha-form-group {
+    margin-top: 10px;
+}
+
+.ha-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.ha-connection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ha-actions {
+    display: inline;
+}
+
+.ha-states {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.ha-debug {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.ha-debug h3 {
+    margin-top: 0;
+    color: #495057;
+    font-size: 1.1em;
+}
+
+.ha-debug pre {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px 0;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.ha-deviceactions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    >button {
+        display: none;
+    }
+
+    .ha-toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 54px;
+        height: 28px;
+
+        input:checked+.ha-slider {
+            background-color: #2196F3;
+        }
+
+        input:checked+.ha-slider:before {
+            transform: translateX(26px);
+        }
+
+        .ha-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+
+            &:before {
+                position: absolute;
+                content: "";
+                height: 20px;
+                width: 20px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+.logins {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    &>div:nth-child(1) {
+        border-right: 1px solid black;
+        flex: 1;
+    }
+}
+
+/* API Controls Styles */
+.ha-api-controls {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.ha-api-controls h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.ha-result {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 50px;
+}
+
+.states-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.entity-card {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.entity-card strong {
+    color: #007cba;
+    font-family: monospace;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* Entities Section Styles */
+.ha-entities-section {
+    margin: 30px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.ha-entities-section h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #007cba;
+    padding-bottom: 10px;
+}
+
+.ha-entities-stats {
+    margin: 15px 0;
+    padding: 5px 10px;
+    background-color: #e8f4f8;
+    border-radius: 4px;
+    border-left: 4px solid #007cba;
+}
+
+.ha-entities-grid {
+    margin-top: 20px;
+}
+
+/* Simple collapsible domain groups using HTML details */
+.ha-domain-group {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.ha-domain-group:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.ha-domain-group summary {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    list-style: none;
+}
+
+.ha-domain-group summary:hover {
+    background: linear-gradient(135deg, #e8e8e8 0%, #ddd 100%);
+}
+
+.ha-domain-group summary::-webkit-details-marker {
+    display: none;
+}
+
+.ha-domain-group summary::after {
+    content: '▼';
+    font-size: 12px;
+    color: #666;
+    transition: transform 0.3s ease;
+    margin-left: 10px;
+}
+
+.ha-domain-group:not([open]) summary::after {
+    transform: rotate(-90deg);
+}
+
+.ha-domain-entities {
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 15px;
+}
+
+.ha-domain-count {
+    background-color: #007cba;
+    color: white;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: normal;
+    margin-left: 10px;
+}
+
+.ha-entity-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+}
+
+.ha-entity-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ha-entity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ha-entity-id {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #666;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.ha-entity-state {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.state-on {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.state-off {
+    background-color: #f44336;
+    color: white;
+}
+
+.state-other {
+    background-color: #9E9E9E;
+    color: white;
+}
+
+.ha-entity-name {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.ha-entity-details {
+    margin: 10px 0;
+}
+
+.ha-entity-time,
+.ha-entity-unit {
+    display: block;
+    color: #666;
+    font-size: 11px;
+    margin: 2px 0;
+}
+
+.ha-toggle-btn {
+    background-color: #FF9800;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.ha-toggle-btn:hover {
+    background-color: #F57C00;
+}
+
+.ha-toggle-btn:active {
+    background-color: #E65100;
+}
+
+.ha-entity-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.ha-control-btn {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+    flex: 1;
+}
+
+.ha-turn-on-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.ha-turn-on-btn:hover {
+    background-color: #45a049;
+}
+
+.ha-turn-on-btn:active {
+    background-color: #3d8b40;
+}
+
+.ha-turn-off-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.ha-turn-off-btn:hover {
+    background-color: #da190b;
+}
+
+.ha-turn-off-btn:active {
+    background-color: #c1170c;
+}
+
+.ha-control-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Domain Control Buttons */
+.ha-domain-controls {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+.ha-domain-controls .ha-button {
+    flex: 1;
+    max-width: 120px;
+    font-size: 13px;
+    padding: 8px 16px;
+}
+
+/* Improved Entity Cards */
