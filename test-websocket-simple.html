@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test Simple</title>
+    <script src="js/websocket-handler-simple.js"></script>
+</head>
+
+<body>
+    <h1>Home Assistant WebSocket Test</h1>
+    <div id="status">Status: Not connected</div>
+    <div id="log"></div>
+
+    <script>
+        // Simple test of the WebSocket handler
+        const wsHandler = new WebSocketHandler('http://homeassistant.local:8123', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmNWQzYWQxYWVjOTI0YmVlODBhZjdhMmI2MzQwMGY4YiIsImlhdCI6MTc0OTAzNjY0OCwiZXhwIjoxNzQ5MDM4NDQ4fQ.IobzwPckF6iFZwKwmidLVRa4vNiwLoHZjAbrGTIUmqo');
+
+        // Override onStatusChange for testing
+        wsHandler.onStatusChange = (status) => {
+            document.getElementById('status').textContent = `Status: ${status}`;
+        };
+
+        // Test subscription to a light entity
+        wsHandler.whenReady(() => {
+            console.log('WebSocket ready for testing');
+
+            // Test subscribing to a light entity
+            wsHandler.subscribeToStates(['automation.autoturnoffshelly', 'switch.smart_switch_2308021562579758180148e1e9d3f35c_outlet', 'sensor.time'], (stateData) => {
+                const log = document.getElementById('log');
+                log.innerHTML += `<p>Update: ${stateData.entity_id} = ${stateData.new_state.state}</p>`;
+            });
+        });
+
+        // Connect
+        wsHandler.connect();
+    </script>
+</body>
+
+</html>

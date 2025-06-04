@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Assistant Integration</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script src="js/websocket-handler.js"></script>
+    <script src="js/whsforphp.js"></script>
 </head>
 
 <?php

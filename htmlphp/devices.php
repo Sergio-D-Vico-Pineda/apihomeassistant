@@ -1,5 +1,6 @@
  <?php
     require_once __DIR__ . '/../request_handler.php';
+    // session_start();
 
     // Fetch states using the RequestHandler
     $statesResult = RequestHandler::getStatesData();
@@ -21,34 +22,34 @@
         $error = $statesResult['error'];
     }
     ?>
- <!-- <script src="../js/websocket-handler.js"></script> -->
+
  <script>
      document.addEventListener("DOMContentLoaded", function() {
          // Initialize details state from localStorage
          initializeDetailsState();
          const wsHandler = new WebSocketHandler('<?= $_SESSION["ha_url"] ?>', '<?= $_SESSION["ha_token"] ?>');
-         wsHandler.connect();
+         wsHandler.connect(); // Subscribe to state changes for all entities after WebSocket is ready         wsHandler.whenReady(() => {
+         console.log('6: WebSocket ready, subscribing to entities');
 
-         // Subscribe to state changes for all entities after DOM is loaded
-         setTimeout(() => {
+         wsHandler.whenReady(() => {
              const entityCards = document.querySelectorAll('[data-entity-id]');
              const entityIds = Array.from(entityCards).map(card => card.dataset.entityId);
 
-             console.log('Subscribing to entities:', entityIds);
-
+             // Simple selective subscription using triggers
              wsHandler.subscribeToStates(entityIds, (stateData) => {
-                 console.log('State update received:', stateData);
+                 console.log('State update:', stateData.entity_id, stateData.new_state.state);
                  updateEntityState(stateData);
              });
-         }, 1000); // Wait for WebSocket connection to be established
-
-         if (window.history.replaceState) {
-             window.history.replaceState(null, null, window.location.href);
-         }
+         });
      });
+
+     if (window.history.replaceState) {
+         window.history.replaceState(null, null, window.location.href);
+     }
 
      // Function to update entity state in real-time
      function updateEntityState(stateData) {
+         console.log(stateData);
          const entityCard = document.querySelector(`[data-entity-id="${stateData.entity_id}"]`);
          if (!entityCard) return;
 
