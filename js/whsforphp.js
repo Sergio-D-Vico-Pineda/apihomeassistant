@@ -15,11 +15,10 @@ class WebSocketHandler {
 
     connect() {
         this.ws = new WebSocket(this.wsUrl);
-        console.log('Connecting to WebSocket');
-        this.onStatusChange('Connecting');
+        console.log('1: Connecting');
 
         this.ws.onopen = () => {
-            console.log('Connected');
+            console.log('2: Connected');
             this.onStatusChange('Connected');
             this.authenticate();
         };
@@ -41,6 +40,7 @@ class WebSocketHandler {
     }
 
     authenticate() {
+        console.log('3: Authenticating with access token');
         const authMessage = {
             type: 'auth',
             access_token: this.accessToken
@@ -53,21 +53,25 @@ class WebSocketHandler {
     }
 
     whenReady(callback) {
-        console.log('Checking if WebSocket is ready');
         if (this.isReady()) {
+            console.log('1.1 WebSocket is ready, calling callback');
             callback();
         } else {
+            console.log('1.1 WebSocket is not ready, adding callback to queue');
             this.readyCallbacks.push(callback);
         }
     }
 
     // Subscribe to specific entities using triggers (efficient)
     subscribeToStates(entityIds, callback) {
-        console.log('Subscribing to entities:', entityIds);
+        console.log('7: Subscribing to states');
+        // console.log('Entities', entityIds);
         const subscriptionIds = [];
 
         entityIds.forEach(entityId => {
             const subscriptionId = this.messageId++;
+
+            console.log(`8: Creating trigger subscription for entity: ${entityId} with ID: ${subscriptionId}`);
 
             const message = {
                 id: subscriptionId,
@@ -92,6 +96,19 @@ class WebSocketHandler {
     }
 
     sendMessage(message) {
+
+        if (message.type === 'auth') {
+            console.log('4: Sending auth message');
+        } else if (message.type === 'subscribe_events') {
+            console.log('9-1: Sending subscribe EVENTS message:', message);
+        } else if (message.type === 'subscribe_trigger') {
+            console.log('9-2: Sending subscribe TRIGGER message:', message);
+        } else if (message.type === 'unsubscribe_events') {
+            console.log('10: Sending unsubscribe message:', message);
+        } else {
+            console.log('Unknown: Sending message:', message);
+        }
+
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
             this.ws.send(JSON.stringify(message));
             return true;
@@ -100,10 +117,11 @@ class WebSocketHandler {
     }
 
     handleMessage(data) {
-        console.log('Received message:', data);
+        // console.log('Received message:', data);
         if (data.type === 'auth_ok') {
-            console.log('Authentication successful');
+            console.log('5: Authentication successful: Inside HandleMessage');
             this.isAuthenticated = true;
+            console.log('6: Calling ready callbacks: Inside HandleMessage');
             this.readyCallbacks.forEach(callback => callback());
             this.readyCallbacks = [];
             return;
@@ -115,11 +133,12 @@ class WebSocketHandler {
         }
 
         if (data.type === 'event') {
+            console.log('10: Calling callback: Inside HandleMessage');
             const subscription = this.subscriptions.get(data.id);
 
             if (subscription && subscription.callback) {
                 if (subscription.type === 'trigger') {
-                    console.log(subscription);
+                    // console.log(subscription);
                     // Handle trigger events
                     const triggerData = {
                         entity_id: subscription.entityId,

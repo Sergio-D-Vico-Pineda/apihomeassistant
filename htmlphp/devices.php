@@ -28,16 +28,16 @@
          // Initialize details state from localStorage
          initializeDetailsState();
          const wsHandler = new WebSocketHandler('<?= $_SESSION["ha_url"] ?>', '<?= $_SESSION["ha_token"] ?>');
-         wsHandler.connect(); // Subscribe to state changes for all entities after WebSocket is ready         wsHandler.whenReady(() => {
-         console.log('6: WebSocket ready, subscribing to entities');
+         wsHandler.connect();
 
+         // Subscribe to state changes for all entities after WebSocket is ready
          wsHandler.whenReady(() => {
              const entityCards = document.querySelectorAll('[data-entity-id]');
              const entityIds = Array.from(entityCards).map(card => card.dataset.entityId);
 
              // Simple selective subscription using triggers
              wsHandler.subscribeToStates(entityIds, (stateData) => {
-                 console.log('State update:', stateData.entity_id, stateData.new_state.state);
+                 console.log('11: Visual state update:', stateData.entity_id, stateData.new_state.state);
                  updateEntityState(stateData);
              });
          });
@@ -49,7 +49,6 @@
 
      // Function to update entity state in real-time
      function updateEntityState(stateData) {
-         console.log(stateData);
          const entityCard = document.querySelector(`[data-entity-id="${stateData.entity_id}"]`);
          if (!entityCard) return;
 
@@ -84,10 +83,9 @@
          }
 
          // Add visual feedback for the update
-         entityCard.style.transition = 'background-color 0.3s ease';
          entityCard.style.backgroundColor = '#e8f5e8';
          setTimeout(() => {
-             entityCard.style.backgroundColor = '';
+             entityCard.style.backgroundColor = 'white';
          }, 1000);
      }
 
@@ -141,7 +139,9 @@
          });
          // Save the new state
          saveDetailsState();
-     } // Function to toggle entity state
+     }
+
+     // Function to toggle entity state
      async function toggleEntity(entityId) {
          const button = event.target;
          const originalText = button.textContent;
