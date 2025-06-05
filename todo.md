@@ -1,0 +1,4 @@
+- Register who perform the action
+- Be able to subscribe and unsubscribe to specific devices
+- Show and hide the devices
+- Fetch the state of a device via WebSocket
